@@ -50,7 +50,7 @@ class Navy(object):
     def __init__(self, data):
         self._data = data[2].split(' in the ')
 
-        for basic, order in zip(BASIC_ATTRS, range(0, self._data)):
+        for basic, order in zip(BASIC_ATTRS, range(0, len(self._data))):
             setattr(self, basic, self._data[order])
         self.archipelago = self._data[2]
 
