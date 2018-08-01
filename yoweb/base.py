@@ -1,6 +1,6 @@
 import pandas
 
-from yoweb.pirate import Affiliations, Reputations
+from yoweb.pirate import Affiliations, Reputations, Skills
 
 class Ocean(object):
     """ Base class for all Yoweb objects
@@ -60,3 +60,4 @@ class Pirate(object):
         reputation_data = self._data[3][1]
         self.affiliations = Affiliations(affiliation_data)
         self.reputations = Reputations(reputation_data)
+        self.skills = Skills(self._data)
