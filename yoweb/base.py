@@ -1,6 +1,7 @@
+import attr
 import pandas
-
 from yoweb.pirate import Affiliations, Reputations, Skills
+
 
 class Ocean(object):
     """ Base class for all Yoweb objects
@@ -19,12 +20,17 @@ class Ocean(object):
             self._notimplemented()
         return ocean
 
-    def getPirate(self, name):
+    def getpirate(self, name):
         pirate = Pirate(name, self._initpath)
         return pirate
 
     def _notimplemented(self):
         raise NotImplementedError('Abstract method not implemented.')
+
+    def __repr__(self):
+        name = self.__class__.__name__
+        ocean = self._ocean
+        return "<{name}:{ocean}>".format(name=name, ocean=ocean)
 
 
 class Pirate(object):
@@ -41,23 +47,26 @@ class Pirate(object):
     buildings = None
     familiars = None
     hearties = None
-    # Right Column
-    skills = None
-    #
+
     def __init__(self, name, initpath):
         self.name = name
         self._initpath = initpath
         self._path = initpath + 'pirate.wm?classic=$classic&target={pirate}'.format(pirate=self.name)
-        self._data = self._loadData(self._path)
-        self._setData()
-    #
-    def _loadData(self, path):
-        data = pandas.read_html(self._path)
+        self._data = self._loaddata(self._path)
+        self._setdata()
+
+    def _loaddata(self, path):
+        data = pandas.read_html(path)
         return data
-    #
-    def _setData(self):
+
+    def _setdata(self):
         affiliation_data = self._data[0][2][0].split('  ')
         reputation_data = self._data[3][1]
-        self.affiliations = Affiliations(affiliation_data)
-        self.reputations = Reputations(reputation_data)
-        self.skills = Skills(self._data)
+        self.affiliations = Affiliations(affiliation_data, self.name)
+        self.reputations = Reputations(reputation_data, self.name)
+        self.skills = Skills(self._data, self.name)
+
+    def __repr__(self):
+        name = self.__class__.__name__
+        pirate = self.name
+        return "<{name}:{pirate}>".format(name=name, pirate=self.name)
