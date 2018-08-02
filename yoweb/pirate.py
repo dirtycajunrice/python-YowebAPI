@@ -18,7 +18,7 @@ class Affiliations(object):
 class Carousing(object):
     def __init__(self, data, pirate):
         self.name = pirate
-        self._data = data[1]
+        self._data = data
         skills = ('drinking', 'spades', 'hearts', 'treasure_drop', 'poker')
         for skill, order in zip(skills,  self._data.index.values):
             setattr(self, skill, Statistics(self._data[order], self.name))
