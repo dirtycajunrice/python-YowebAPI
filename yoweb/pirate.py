@@ -87,6 +87,9 @@ class Flag(object):
         if self._data[1] == self._default:
             for basic in BASIC_ATTRS:
                 setattr(self, basic, self._default)
+        elif len(self._data) < 3:
+            for basic in BASIC_ATTRS:
+                setattr(self, basic, None)
         else:
             for basic, order in zip(BASIC_ATTRS, range(0, len(self._data[1].split(' of the flag ')))):
                 setattr(self, basic, self._data[1].split(' of the flag ')[order])
@@ -117,7 +120,7 @@ class Navy(object):
 
     def __init__(self, data, pirate):
         self._name = pirate
-        if data[0] == self._default:
+        if data[0] == self._default or len(data) < 3:
             self._data = data[1].split(' in the ')
         else:
             self._data = data[2].split(' in the ')
