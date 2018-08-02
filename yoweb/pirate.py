@@ -133,7 +133,7 @@ class Piracy(object):
         skills = ('sailing', 'rigging', 'carpentry', 'patching', 'bilging', 'gunnery', 'treasure_haul',
                   'duty_navigation', 'battle_navigation', 'swordfighting', 'rumble')
         for skill, order in zip(skills, self._data.index.values):
-            setattr(self, skill, Statistics(self._data[order], self.name))
+            setattr(self, skill, Statistics(self._data[order], self._name))
 
     def __repr__(self):
         name = self.__class__.__name__
