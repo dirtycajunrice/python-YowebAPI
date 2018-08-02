@@ -20,7 +20,7 @@ class Ocean(object):
         return ocean
 
     def getpirate(self, name):
-        pirate = Pirate(name, self._initpath)
+        pirate = Pirate(name, self._initpath, self)
         return pirate
 
     def _notimplemented(self):
@@ -38,22 +38,15 @@ class Pirate(object):
             name (:str:`yoweb.base.Pirate`): Pirates in-game name
             initpath (:str:`yoweb.base.Ocean`): base path to yoweb
     """
-    hearties = None
-    reputations = None
-    skills = None
-    affiliations = None
-    familiars = None
-
-    def __init__(self, name, initpath):
+    def __init__(self, name, initpath, oceanobj):
         self.name = name
         self._initpath = initpath
         self._path = initpath + 'pirate.wm?classic=$classic&target={pirate}'.format(pirate=self.name)
         self._data = None
-        self._lazy = True
+        self._oceanobj = oceanobj
 
     def __getattr__(self, item):
         if not self._data:
-            print('loading data')
             self._loaddata(self._path)
         return self.__getattribute__(item)
 
@@ -73,7 +66,7 @@ class Pirate(object):
         self.affiliations = Affiliations(affiliation_data, self.name)
         self.reputations = Reputations(reputation_data, self.name)
         self.skills = Skills(self._data, self.name)
-        self.hearties = Hearties(hearties_data, self.name)
+        self.hearties = Hearties(hearties_data, self.name, self._oceanobj)
         self.familiars = Familiars(familiars_data, self.name)
 
     def __repr__(self):

@@ -102,12 +102,13 @@ class Flag(object):
 
 class Hearties(object):
 
-    def __init__(self, data, pirate):
+    def __init__(self, data, pirate, oceanobj):
         self._name = pirate
         self._data = data
         self.list = None
         if self._data is not None:
-            self.list = self._data.split('Hearties  ')[1].split(', ')
+            hearty_list = self._data.split('Hearties  ')[1].split(', ')
+            self.list = [oceanobj.getpirate(h) for h in hearty_list]
 
     def __repr__(self):
         name = self.__class__.__name__
