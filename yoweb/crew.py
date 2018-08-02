@@ -56,7 +56,7 @@ class CrewAffiliations(object):
             self.flag = self._data.split('  of the flag  ')[0]
         if 'Public Statement' in self._data:
             self.public_statement = self._data.split('  Public Statement  ')[1]
-        founded_date_str = self._data.split(' Founded in the year ')[1].split('  ')[0].split(' ')
+        founded_date_str = self._data.split(' Founded in the year ')[1].split('  ')[0]
         self.founded = datetime.strptime(founded_date_str, "%Y on %B %d").date()
         fame_data = self._data.split(founded_date_str)[1].split('  ')[1].split(' of ')
         self.crew_rank = fame_data[0]
