@@ -50,7 +50,7 @@ class Pirate(object):
         self._data = None
 
     def __getattr__(self, item):
-        if not self.__dict__.get(item) and not self._data:
+        if not self._data:
             print('loading data')
             self._loaddata(self._path)
         return self.__getattribute__(item)
