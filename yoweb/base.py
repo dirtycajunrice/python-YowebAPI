@@ -49,11 +49,11 @@ class Pirate(object):
         self._path = initpath + 'pirate.wm?classic=$classic&target={pirate}'.format(pirate=self.name)
         self._data = None
 
-    def __getattr__(self, item):
+    def __getattribute__(self, item):
         if not self._data:
             print('loading data')
             self._loaddata(self._path)
-        return self.__getattribute__(item)
+        return object.__getattribute__(self, item)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
