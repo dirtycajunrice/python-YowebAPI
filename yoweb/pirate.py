@@ -125,7 +125,7 @@ class Navy(object):
             self._data = data[1].split(' in the ')
         else:
             self._data = data[2].split(' in the ')
-        for basic, order in zip(BASIC_ATTRS, range(0, len(self._data))):
+        for order, basic in enumerate(BASIC_ATTRS):
             setattr(self, basic, self._data[order])
         self.archipelago = self._data[2]
 
@@ -155,7 +155,7 @@ class Reputations(object):
         self._name = pirate
         self._data = data
         reputations = ('conqueror', 'explorer', 'patron', 'magnate')
-        for reputation, order in zip(reputations, range(0, len(reputations))):
+        for order, reputation in enumerate(reputations):
             setattr(self, reputation, self._data[order])
 
     def __repr__(self):
