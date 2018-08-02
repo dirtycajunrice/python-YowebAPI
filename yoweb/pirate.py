@@ -63,6 +63,15 @@ class Crew(object):
         return "<{name}:{pirate}>".format(name=name, pirate=pirate)
 
 
+class Familiars(object):
+    default = 'None'
+
+    def __init__(self, data, pirate):
+        self.name = pirate
+        self._data = data
+
+
+
 class Flag(object):
     default = 'Independent Pirate'
 

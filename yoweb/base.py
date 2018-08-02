@@ -69,4 +69,4 @@ class Pirate(object):
     def __repr__(self):
         name = self.__class__.__name__
         pirate = self.name
-        return "<{name}:{pirate}>".format(name=name, pirate=self.name)
+        return "<{name}:{pirate}>".format(name=name, pirate=pirate)
