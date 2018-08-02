@@ -38,25 +38,26 @@ class Pirate(object):
             name (:str:`yoweb.base.Pirate`): Pirates in-game name
             initpath (:str:`yoweb.base.Ocean`): base path to yoweb
     """
-    # Classes/attrs left to implement
-    # Center Column
-    pictures = None
-    trophies = None
-    # Left Column
-    buildings = None
-
+    hearties = None
+    reputations = None
+    skills = None
+    affiliations = None
+    familiars = None
     def __init__(self, name, initpath):
         self.name = name
         self._initpath = initpath
         self._path = initpath + 'pirate.wm?classic=$classic&target={pirate}'.format(pirate=self.name)
-        self._data = self._loaddata(self._path)
-        self._setdata()
+        self._data = None
+
+    def __getattr__(self, item):
+        if not self.__dict__.get(item) and not self._data:
+            print('loading data')
+            self._loaddata(self._path)
+        return self.__getattribute__(item)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
-        return data
-
-    def _setdata(self):
+        self._data = data
         familiars_data, hearties_data = None, None
         affiliation_data = self._data[0][2][0].split('  ')
         reputation_data = self._data[3][1]
