@@ -104,7 +104,7 @@ class Hearties(object):
         self._data = data
         self.list = None
         if self._data is not None:
-            self.list = self._data.split('  Hearties  ')[1].split(', ')
+            self.list = self._data.split('Hearties  ')[1].split(', ')
 
     def __repr__(self):
         name = self.__class__.__name__
