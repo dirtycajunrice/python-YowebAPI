@@ -117,7 +117,7 @@ class Navy(object):
 
     def __init__(self, data, pirate):
         self._name = pirate
-        if self._data[0] == self._default:
+        if data[0] == self._default:
             self._data = data[1].split(' in the ')
         else:
             self._data = data[2].split(' in the ')
