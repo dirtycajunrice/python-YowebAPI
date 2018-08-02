@@ -88,8 +88,8 @@ class Flag(object):
             for basic in BASIC_ATTRS:
                 setattr(self, basic, self._default)
         else:
-            for basic, order in zip(BASIC_ATTRS, range(0, len(self._data[0].split(' of the flag ')))):
-                setattr(self, basic, self._data[0].split(' of the flag ')[order])
+            for basic, order in zip(BASIC_ATTRS, range(0, len(self._data[1].split(' of the flag ')))):
+                setattr(self, basic, self._data[1].split(' of the flag ')[order])
 
     def __repr__(self):
         name = self.__class__.__name__
