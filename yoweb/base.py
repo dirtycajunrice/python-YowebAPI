@@ -51,12 +51,11 @@ class Pirate(object):
         self._data = None
         self._lazy = True
 
-    def __getattribute__(self, item):
-        if self._lazy:
+    def __getattr__(self, item):
+        if not self._data:
             print('loading data')
             self._loaddata(self._path)
-            self._lazy = False
-        return object.__getattribute__(self, item)
+        return self.__getattribute__(item)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
