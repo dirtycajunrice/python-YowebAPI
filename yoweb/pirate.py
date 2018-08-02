@@ -113,9 +113,14 @@ class Hearties(object):
 
 
 class Navy(object):
+    _default = 'Independent Pirate'
+
     def __init__(self, data, pirate):
         self._name = pirate
-        self._data = data[2].split(' in the ')
+        if self._data[0] == self._default:
+            self._data = data[1].split(' in the ')
+        else:
+            self._data = data[2].split(' in the ')
         for basic, order in zip(BASIC_ATTRS, range(0, len(self._data))):
             setattr(self, basic, self._data[order])
         self.archipelago = self._data[2]
