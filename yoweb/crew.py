@@ -7,7 +7,8 @@ class BootyShares(object):
         self._data = data
         self.type = sharetype
         for order, share in enumerate(SHARES):
-            setattr(self, share, self._data[order])
+            share_amount = str(self._data[order]).replace('\xa0', ' ')
+            setattr(self, share, share_amount)
 
     def __repr__(self):
         name = self.__class__.__name__
