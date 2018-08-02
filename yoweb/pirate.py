@@ -55,7 +55,7 @@ class Crew(object):
                 setattr(self, basic, self._default)
         else:
             for basic, order in zip(BASIC_ATTRS, range(0, len(self._data[0].split(' of the crew ')))):
-                setattr(self, basic, self._data[order].split(' of the crew '))
+                setattr(self, basic, self._data[0].split(' of the crew ')[order])
 
     def __repr__(self):
         name = self.__class__.__name__
@@ -89,7 +89,7 @@ class Flag(object):
                 setattr(self, basic, self._default)
         else:
             for basic, order in zip(BASIC_ATTRS, range(0, len(self._data[0].split(' of the flag ')))):
-                setattr(self, basic, self._data[order].split(' of the flag '))
+                setattr(self, basic, self._data[0].split(' of the flag ')[order])
 
     def __repr__(self):
         name = self.__class__.__name__
