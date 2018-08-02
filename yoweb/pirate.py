@@ -20,7 +20,7 @@ class Carousing(object):
         self.name = pirate
         self._data = data[1]
         skills = ('drinking', 'spades', 'hearts', 'treasure_drop', 'poker')
-        for skill, order in zip(skills, range(0, len(skills))):
+        for skill, order in zip(skills,  self._data.index.values):
             setattr(self, skill, Statistics(self._data[order], self.name))
 
     def __repr__(self):
@@ -32,10 +32,10 @@ class Carousing(object):
 class Crafting(object):
     def __init__(self, data, pirate):
         self.name = pirate
-        self._data = data[1]
+        self._data = data
         skills = ('distilling', 'alchemistry', 'shipwrighting', 'blacksmithing', 'foraging', 'weaving')
 
-        for skill, order in zip(skills, range(0, len(skills))):
+        for skill, order in zip(skills,  self._data.index.values):
             setattr(self, skill, Statistics(self._data[order], self.name))
 
     def __repr__(self):
@@ -64,12 +64,18 @@ class Crew(object):
 
 
 class Familiars(object):
-    default = 'None'
 
     def __init__(self, data, pirate):
         self.name = pirate
         self._data = data
+        self.list = None
+        if self._data is not None:
+            self.list = self._data.split('  Hearties  ')[0].split('Familiars  ')[1].split('  ')
 
+    def __repr__(self):
+        name = self.__class__.__name__
+        pirate = self.name
+        return "<{name}:{pirate}>".format(name=name, pirate=pirate)
 
 
 class Flag(object):
@@ -84,6 +90,21 @@ class Flag(object):
         else:
             for basic, order in zip(BASIC_ATTRS, range(0, len(self._data[0].split(' of the flag ')))):
                 setattr(self, basic, self._data[order].split(' of the flag '))
+
+    def __repr__(self):
+        name = self.__class__.__name__
+        pirate = self.name
+        return "<{name}:{pirate}>".format(name=name, pirate=pirate)
+
+
+class Hearties(object):
+
+    def __init__(self, data, pirate):
+        self.name = pirate
+        self._data = data
+        self.list = None
+        if self._data is not None:
+            self.list = self._data.split('  Hearties  ')[1].split(', ')
 
     def __repr__(self):
         name = self.__class__.__name__
@@ -108,10 +129,10 @@ class Navy(object):
 class Piracy(object):
     def __init__(self, data, pirate):
         self.name = pirate
-        self._data = data[1]
+        self._data = data
         skills = ('sailing', 'rigging', 'carpentry', 'patching', 'bilging', 'gunnery', 'treasure_haul',
                   'duty_navigation', 'battle_navigation', 'swordfighting', 'rumble')
-        for skill, order in zip(skills, range(0, len(skills))):
+        for skill, order in zip(skills, self._data.index.values):
             setattr(self, skill, Statistics(self._data[order], self.name))
 
     def __repr__(self):
@@ -138,9 +159,9 @@ class Skills(object):
     def __init__(self, data, pirate):
         self.name = pirate
         self._data = data
-        self.piracy = Piracy(self._data[9], self.name)
-        self.carousing = Carousing(self._data[10], self.name)
-        self.crafting = Crafting(self._data[11], self.name)
+        self.piracy = Piracy(self._data[0][1][-31:-20], self.name)
+        self.carousing = Carousing(self._data[0][1][-16:-11], self.name)
+        self.crafting = Crafting(self._data[0][1][-7:-1], self.name)
 
     def __repr__(self):
         name = self.__class__.__name__

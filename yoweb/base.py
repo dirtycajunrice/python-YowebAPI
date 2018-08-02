@@ -1,6 +1,5 @@
-import attr
 import pandas
-from yoweb.pirate import Affiliations, Reputations, Skills
+from yoweb.pirate import Affiliations, Reputations, Skills, Hearties, Familiars
 
 
 class Ocean(object):
@@ -45,8 +44,6 @@ class Pirate(object):
     trophies = None
     # Left Column
     buildings = None
-    familiars = None
-    hearties = None
 
     def __init__(self, name, initpath):
         self.name = name
@@ -60,11 +57,21 @@ class Pirate(object):
         return data
 
     def _setdata(self):
+        familiars_data, hearties_data = None, None
         affiliation_data = self._data[0][2][0].split('  ')
         reputation_data = self._data[3][1]
+
+        for row in self._data[0][0][1:]:
+            if 'Hearties' in str(row):
+                hearties_data = str(row)
+            if 'Familiars' in str(row):
+                familiars_data = str(row)
+
         self.affiliations = Affiliations(affiliation_data, self.name)
         self.reputations = Reputations(reputation_data, self.name)
         self.skills = Skills(self._data, self.name)
+        self.hearties = Hearties(self._data[0][0][1:], self.name)
+        self.familiars = Familiars(familiars_data, self.name)
 
     def __repr__(self):
         name = self.__class__.__name__
