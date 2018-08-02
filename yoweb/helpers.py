@@ -1,5 +1,5 @@
 BASIC_ATTRS = ('rank', 'name')
-
+SHARES = ('jobbing_pirate', 'cabin_person', 'pirate', 'officer', 'fleet_officer', 'senior_officer', 'captain')
 
 def clean_stat(data):
     stats = data.split('  ')
