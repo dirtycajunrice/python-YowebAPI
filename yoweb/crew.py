@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from yoweb.helpers import SHARES
 
 
@@ -36,6 +38,28 @@ class ActiveMates(object):
                 self.senior_officer = self._data[1][count]
             elif rank == 'Captain:':
                 self.captain = self._data[1][count]
+
+    def __repr__(self):
+        name = self.__class__.__name__
+        crewid = self._name
+        return "<{name}:{crewid}>".format(name=name, crewid=crewid)
+
+class Affiliations(object):
+    def __init__(self, data, name):
+        self._name = name
+        self._data = data
+        self.flag = None
+        self.public_statement = None
+
+        if 'flag' in self._data:
+            self.flag = self._data.split('  of the flag  ')[0]
+        if 'Public Statement' in self._data:
+            self.public_statement = self._data.split('  Public Statement  ')[1]
+        founded_date_str = self._data.split(' Founded in the year ')[1].split('  ')[0].split(' ')
+        self.founded = datetime.strptime(founded_date_str, "%Y on %B %d").date()
+        fame_data = self._data.split(founded_date_str)[1].split('  ')[1].split(' of ')
+        self.crew_rank = fame_data[0]
+        self.fame = fame_data[1]
 
     def __repr__(self):
         name = self.__class__.__name__
