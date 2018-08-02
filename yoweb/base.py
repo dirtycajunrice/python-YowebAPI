@@ -43,16 +43,19 @@ class Pirate(object):
     skills = None
     affiliations = None
     familiars = None
+
     def __init__(self, name, initpath):
         self.name = name
         self._initpath = initpath
         self._path = initpath + 'pirate.wm?classic=$classic&target={pirate}'.format(pirate=self.name)
         self._data = None
+        self._lazy = True
 
     def __getattribute__(self, item):
-        if not self._data:
+        if self._lazy:
             print('loading data')
             self._loaddata(self._path)
+            self._lazy = False
         return object.__getattribute__(self, item)
 
     def _loaddata(self, path):
