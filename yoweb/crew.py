@@ -44,7 +44,8 @@ class ActiveMates(object):
         crewid = self._name
         return "<{name}:{crewid}>".format(name=name, crewid=crewid)
 
-class Affiliations(object):
+
+class CrewAffiliations(object):
     def __init__(self, data, name):
         self._name = name
         self._data = data
