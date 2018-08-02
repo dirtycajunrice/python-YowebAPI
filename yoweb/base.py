@@ -23,6 +23,10 @@ class Ocean(object):
         pirate = Pirate(name, self._initpath, self)
         return pirate
 
+    def getcrew(self, crewid):
+        crew = Crew(crewid, self._initpath, self)
+        return crew
+
     def _notimplemented(self):
         raise NotImplementedError('Abstract method not implemented.')
 
@@ -73,3 +77,25 @@ class Pirate(object):
         name = self.__class__.__name__
         pirate = self.name
         return "<{name}:{pirate}>".format(name=name, pirate=pirate)
+
+class Crew(object):
+    def __init__(self, crewid, initpath, oceanobj):
+        self.crewid = crewid
+        self._initpath = initpath
+        self._oceanobj = oceanobj
+        self._path = initpath + 'crew/info.wm?crewid={crewid}&classic=false'.format(crewid=self.crewid)
+        self._data = None
+        self._loaddata(self._path)
+
+    def _loaddata(self, path):
+        data = pandas.read_html(path)
+        self._data = data
+        self.name = None
+
+        reputation_data = self._data[4][1]
+        self.reputations = Reputations(reputation_data, self.name)
+
+    def __repr__(self):
+        name = self.__class__.__name__
+        crewid = self.crewid
+        return "<{name}:{crewid}>".format(name=name, crewid=crewid)
