@@ -70,7 +70,7 @@ class Pirate(object):
         self.affiliations = Affiliations(affiliation_data, self.name)
         self.reputations = Reputations(reputation_data, self.name)
         self.skills = Skills(self._data, self.name)
-        self.hearties = Hearties(self._data[0][0][1:], self.name)
+        self.hearties = Hearties(hearties_data, self.name)
         self.familiars = Familiars(familiars_data, self.name)
 
     def __repr__(self):
