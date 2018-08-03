@@ -78,8 +78,6 @@ class CrewMembers(object):
 
         for member_df in member_dfs[:-1]:
             member_df.dropna(how='all', inplace=True)
-            print('second print')
-            print(member_df)
             title = str(member_df[1][member_df.index.values[1]]).lower().replace(' ', '_')
             member_df.drop(member_df.index[:2])
             members = [self._oceanobj.getpirate(column) for index, row in
