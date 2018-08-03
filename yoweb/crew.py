@@ -79,7 +79,7 @@ class CrewMembers(object):
         for member_df in member_dfs[:-1]:
             member_df.dropna(how='all', inplace=True)
             title = str(member_df[1][member_df.index.values[1]]).lower().replace(' ', '_')
-            member_df.drop(member_df.index[:2])
+            member_df.drop(member_df.index[:2], inplace=True)
             members = [self._oceanobj.getpirate(column) for index, row in
-                       member_df.iterrows() for column in row if column != 'nan']
+                       member_df.iterrows() for column in row if str(column) != 'nan']
             setattr(self, title, members)
