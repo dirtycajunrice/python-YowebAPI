@@ -111,7 +111,7 @@ class Crew(object):
         self.reputations = Reputations(reputation_data, self.name)
         self.booty_shares = BootyShares(bootyshare_data, bootyshare_type, self.name)
         self.active_mates = ActiveMates(activemate_data, self.name)
-        self.crew_members = CrewMembers(member_data, self.name, self._oceanobj)
+        self.members = CrewMembers(member_data, self.name, self._oceanobj)
 
     def __repr__(self):
         name = self.__class__.__name__
