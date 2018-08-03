@@ -43,17 +43,17 @@ CREW = OCEAN.getcrew(CREW_ID)
 #### Usage Examples
 ```py
 # Example 1: Get a pirate's piracy skill in carpentry:
->>> CAJUN.skills.piracy.carpentry.ocean_wide
+>>> PIRATE.skills.piracy.carpentry.ocean_wide
 'Renowned'
->>> CAJUN.skills.piracy.carpentry.archipelago
+>>> PIRATE.skills.piracy.carpentry.archipelago
 'Master'
->>> CAJUN.skills.piracy.carpentry.experience
+>>> PIRATE.skills.piracy.carpentry.experience
 'Solid'
 
 # Example 2: Get a pirate's flag information
->>> pirate.affiliations.flag.name
+>>> PIRATE.affiliations.flag.name
 'Consider it Sunk'
->>> pirate.affiliations.flag.rank
+>>> PIRATE.affiliations.flag.rank
 'Lord'
 
 # Example 3: Get a crew's current active mates count
