@@ -1,6 +1,6 @@
 from datetime import datetime
-
-from yoweb.helpers import SHARES
+import numpy as np
+from yoweb.helpers import SHARES, RANKS
 
 
 class BootyShares(object):
@@ -66,3 +66,16 @@ class CrewAffiliations(object):
         name = self.__class__.__name__
         crewid = self._name
         return "<{name}:{crewid}>".format(name=name, crewid=crewid)
+
+class CrewMembers(object):
+    def __init__(self, data, name, oceanobj):
+        self._name = name
+        self._data = data.drop(data.columns[3], axis=1)
+        member_dfs = np.split(self._data, self._data[self._data.isnull().all(1)].index)
+
+        for member_df in member_dfs:
+            member_df.dropna(how='all', inplace=True)
+            title = member_df[1][member_df.index.values[1]]
+            member_df.drop(member_df.index[:2])
+            members = [ oceanobj.getpirate(column) for index, row in member_dfs[1].iterrows() for column in row ]
+            setattr(self, title, members)

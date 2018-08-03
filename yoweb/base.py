@@ -1,6 +1,6 @@
 import pandas
 from yoweb.pirate import Affiliations, Reputations, Skills, Hearties, Familiars
-from yoweb.crew import BootyShares, ActiveMates, CrewAffiliations
+from yoweb.crew import BootyShares, ActiveMates, CrewAffiliations, CrewMembers
 
 class Ocean(object):
     """ Base class for all Yoweb objects
@@ -97,6 +97,7 @@ class Crew(object):
         activemate_data = self._data[6]
         third_frame = self._data[3][2][12]
         bootyshare_type = third_frame.split('shares: ')[1].split('  ')[0]
+        member_data = self._data[8]
 
         if 'flag' in crew_affiliation_data:
             self.name = crew_affiliation_data.split('  of the flag  ')[0]
@@ -110,6 +111,7 @@ class Crew(object):
         self.reputations = Reputations(reputation_data, self.name)
         self.booty_shares = BootyShares(bootyshare_data, bootyshare_type, self.name)
         self.active_mates = ActiveMates(activemate_data, self.name)
+        self.crew_members = CrewMembers(member_data, self.name, self._oceanobj)
 
     def __repr__(self):
         name = self.__class__.__name__
