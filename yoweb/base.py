@@ -85,7 +85,11 @@ class Crew(object):
         self._oceanobj = oceanobj
         self._path = initpath + 'crew/info.wm?crewid={crewid}&classic=false'.format(crewid=self.crewid)
         self._data = None
-        self._loaddata(self._path)
+
+    def __getattr__(self, item):
+        if not self._data:
+            self._loaddata(self._path)
+        return self.__getattribute__(item)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
