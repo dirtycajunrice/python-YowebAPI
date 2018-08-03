@@ -63,8 +63,8 @@ CREW = OCEAN.getcrew(CREW_ID)
 67
 
 # Example 4: Get a crew's current captain and info
->>> CREW.crew_members.Captain
+>>> CREW.crew_members.captain
 [<Pirate:Scar>]
->>> CREW.crew_members.Captain[0].name
+>>> CREW.crew_members.captain[0].name
 'Scar'
 ```

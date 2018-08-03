@@ -71,13 +71,17 @@ class CrewAffiliations(object):
 class CrewMembers(object):
     def __init__(self, data, name, oceanobj):
         self._name = name
-        self._data = data.drop(data.columns[3], axis=1, inplace=True)
+        self._data = data
+        self._oceanobj = oceanobj
+        self._data.drop(self._data.columns[3], axis=1, inplace=True)
         member_dfs = np.split(self._data, self._data[self._data.isnull().all(1)].index)
 
-        for member_df in member_dfs:
+        for member_df in member_dfs[:-1]:
             member_df.dropna(how='all', inplace=True)
-            title = member_df[1][member_df.index.values[1]]
+            print('second print')
+            print(member_df)
+            title = str(member_df[1][member_df.index.values[1]]).lower().replace(' ', '_')
             member_df.drop(member_df.index[:2])
-            members = [oceanobj.getpirate(column) for index, row in
+            members = [self._oceanobj.getpirate(column) for index, row in
                        member_df.iterrows() for column in row if column != 'nan']
             setattr(self, title, members)
