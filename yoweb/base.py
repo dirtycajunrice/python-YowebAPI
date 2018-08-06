@@ -121,3 +121,11 @@ class Crew(object):
         name = self.__class__.__name__
         crewid = self.crewid
         return "<{name}:{crewid}>".format(name=name, crewid=crewid)
+
+class Flag(object):
+    def __init__(self, flagid, initpath, oceanobj):
+        self.flagid = flagid
+        self._initpath = initpath
+        self._oceanobj = oceanobj
+        self._path = initpath + 'flag/info.wm?flagid={flagid}&classic=false'.format(flagid=self.flagid)
+        self._data = None
