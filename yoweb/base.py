@@ -50,10 +50,9 @@ class Pirate(object):
         self._data = None
         self._oceanobj = oceanobj
 
-    def __getattr__(self, item):
-        if not self._data:
-            self._loaddata(self._path)
-        return self.__getattribute__(item)
+    def update(self):
+        # Convenience function to load/reload data
+        self._loaddata(self._path)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
@@ -74,6 +73,11 @@ class Pirate(object):
         self.hearties = Hearties(hearties_data, self.name, self._oceanobj)
         self.familiars = Familiars(familiars_data, self.name)
 
+    def __getattr__(self, item):
+        if not self._data:
+            self._loaddata(self._path)
+        return self.__getattribute__(item)
+
     def __repr__(self):
         name = self.__class__.__name__
         pirate = self.name
@@ -88,10 +92,9 @@ class Crew(object):
         self._path = initpath + 'crew/info.wm?crewid={crewid}&classic=false'.format(crewid=self.crewid)
         self._data = None
 
-    def __getattr__(self, item):
-        if not self._data:
-            self._loaddata(self._path)
-        return self.__getattribute__(item)
+    def update(self):
+        # Convenience function to load/reload data
+        self._loaddata(self._path)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
@@ -118,6 +121,11 @@ class Crew(object):
         self.booty_shares = BootyShares(bootyshare_data, bootyshare_type, self.name)
         self.active_mates = ActiveMates(activemate_data, self.name)
         self.members = CrewMembers(member_data, self.name, self._oceanobj)
+
+    def __getattr__(self, item):
+        if not self._data:
+            self._loaddata(self._path)
+        return self.__getattribute__(item)
 
     def __repr__(self):
         name = self.__class__.__name__
