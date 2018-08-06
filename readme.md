@@ -1,6 +1,8 @@
 # Python-YowebAPI
 
 ## Overview
+*This API is not created, supported, or endorsed by [Grey Havens](https://yppedia.puzzlepirates.com/Grey_Havens)*
+
 Unofficial Python bindings for the
 [Yoweb Browser](https://yppedia.puzzlepirates.com/Yoweb).
 My goal is to match all capabilities of the existing browser. A few of
