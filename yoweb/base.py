@@ -2,6 +2,7 @@ import pandas
 from yoweb.pirate import Affiliations, Reputations, Skills, Hearties, Familiars
 from yoweb.crew import BootyShares, ActiveMates, CrewAffiliations, CrewMembers
 
+
 class Ocean(object):
     """ Base class for all Yoweb objects
         Parameters:
@@ -78,6 +79,7 @@ class Pirate(object):
         pirate = self.name
         return "<{name}:{pirate}>".format(name=name, pirate=pirate)
 
+
 class Crew(object):
     def __init__(self, crewid, initpath, oceanobj):
         self.crewid = crewid
@@ -109,7 +111,7 @@ class Crew(object):
             self.name = crew_affiliation_data.split('  Founded')[0]
 
         self.politics = third_frame.split('  Booty')[0].split(': ')[1]
-        self.ship_restocking = third_frame.split('  Ship restocking:\xa0')[1].split('  Active')[0].replace('\xa0','')
+        self.ship_restocking = third_frame.split('  Ship restocking:\xa0')[1].split('  Active')[0].replace('\xa0', '')
 
         self.affiliations = CrewAffiliations(crew_affiliation_data, self.name)
         self.reputations = Reputations(reputation_data, self.name)
@@ -121,6 +123,7 @@ class Crew(object):
         name = self.__class__.__name__
         crewid = self.crewid
         return "<{name}:{crewid}>".format(name=name, crewid=crewid)
+
 
 class Flag(object):
     def __init__(self, flagid, initpath, oceanobj):
