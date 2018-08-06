@@ -77,9 +77,9 @@ class CrewMembers(object):
         member_dfs = np.split(self._data, self._data[self._data.isnull().all(1)].index)
 
         for member_df in member_dfs:
-            if str(member_df[0][1]) == 'nan':
-                continue
             member_df.dropna(how='all', inplace=True)
+            if member_df.empty:
+                continue
             title = str(member_df[1][member_df.index.values[1]]).lower().replace(' ', '_')
             member_df.drop(member_df.index[:2], inplace=True)
             members = [self._oceanobj.getpirate(column) for index, row in
