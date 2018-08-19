@@ -1,6 +1,7 @@
 import pandas
 from yoweb.pirate import Affiliations, Reputations, Skills, Hearties, Familiars
 from yoweb.crew import BootyShares, ActiveMates, CrewAffiliations, CrewMembers
+from yoweb.ocean import TaxRates
 
 
 class Ocean(object):
@@ -13,6 +14,7 @@ class Ocean(object):
     def __init__(self, ocean):
         self._initpath = 'http://ocean.puzzlepirates.com/yoweb/'
         self._ocean = self.ocean(ocean)
+        self._data = None
 
     def ocean(self, ocean):
         self._initpath = self._initpath.replace('ocean', ocean)
@@ -20,16 +22,31 @@ class Ocean(object):
             self._notimplemented()
         return ocean
 
-    def getpirate(self, name):
-        pirate = Pirate(name, self._initpath, self)
-        return pirate
-
     def getcrew(self, crewid):
         crew = Crew(crewid, self._initpath, self)
         return crew
 
+    def getpirate(self, name):
+        pirate = Pirate(name, self._initpath, self)
+        return pirate
+
+    def update(self):
+        # Convenience function to load/reload data
+        self._loaddata(self._path)
+
+    def _loaddata(self, path):
+        self._tax_path = path + 'econ/taxrates.wm'
+        self._tax_data = pandas.read_html(self._tax_path)
+        self.tax_rates = TaxRates(self._ocean, self._tax_path, self._tax_data)
+
+
     def _notimplemented(self):
         raise NotImplementedError('Abstract method not implemented.')
+
+    def __getattr__(self, item):
+        if not self._data:
+            self._loaddata(self._initpath)
+        return self.__getattribute__(item)
 
     def __repr__(self):
         name = self.__class__.__name__
