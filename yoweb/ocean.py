@@ -22,7 +22,7 @@ class LaborTax(object):
         self._name = name
         self._data = data
 
-        for row in self._data[2][1:].iterrows():
+        for row in self._data[1:].iterrows():
             labor_type = row[1][0]
             amount = float(row[1][1])
             setattr(self, labor_type, amount)
@@ -38,7 +38,7 @@ class CommodityTax(object):
         self._name = name
         self._data = data
 
-        for row in self._data[1][1:].iterrows():
+        for row in self._data[1:].iterrows():
             commodity_type = row[1][0]
             amount = float(row[1][1])
             setattr(self, commodity_type, amount)
