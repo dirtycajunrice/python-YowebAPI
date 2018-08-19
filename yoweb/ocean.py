@@ -39,7 +39,7 @@ class CommodityTax(object):
         self._data = data
 
         for row in self._data[1:].iterrows():
-            commodity_type = str(row[1][0]).lower().replace(' ', '_')
+            commodity_type = str(row[1][0]).lower().replace(' ', '_').replace("'", '')
             amount = float(row[1][1])
             setattr(self, commodity_type, amount)
 
