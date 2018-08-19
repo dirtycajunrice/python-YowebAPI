@@ -2,6 +2,7 @@ import pandas
 from yoweb.pirate import Affiliations, Reputations, Skills, Hearties, Familiars
 from yoweb.crew import BootyShares, ActiveMates, CrewAffiliations, CrewMembers
 
+
 class Ocean(object):
     """ Base class for all Yoweb objects
         Parameters:
@@ -49,10 +50,9 @@ class Pirate(object):
         self._data = None
         self._oceanobj = oceanobj
 
-    def __getattr__(self, item):
-        if not self._data:
-            self._loaddata(self._path)
-        return self.__getattribute__(item)
+    def update(self):
+        # Convenience function to load/reload data
+        self._loaddata(self._path)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
@@ -73,10 +73,16 @@ class Pirate(object):
         self.hearties = Hearties(hearties_data, self.name, self._oceanobj)
         self.familiars = Familiars(familiars_data, self.name)
 
+    def __getattr__(self, item):
+        if not self._data:
+            self._loaddata(self._path)
+        return self.__getattribute__(item)
+
     def __repr__(self):
         name = self.__class__.__name__
         pirate = self.name
         return "<{name}:{pirate}>".format(name=name, pirate=pirate)
+
 
 class Crew(object):
     def __init__(self, crewid, initpath, oceanobj):
@@ -86,10 +92,9 @@ class Crew(object):
         self._path = initpath + 'crew/info.wm?crewid={crewid}&classic=false'.format(crewid=self.crewid)
         self._data = None
 
-    def __getattr__(self, item):
-        if not self._data:
-            self._loaddata(self._path)
-        return self.__getattribute__(item)
+    def update(self):
+        # Convenience function to load/reload data
+        self._loaddata(self._path)
 
     def _loaddata(self, path):
         data = pandas.read_html(path)
@@ -109,7 +114,7 @@ class Crew(object):
             self.name = crew_affiliation_data.split('  Founded')[0]
 
         self.politics = third_frame.split('  Booty')[0].split(': ')[1]
-        self.ship_restocking = third_frame.split('  Ship restocking:\xa0')[1].split('  Active')[0].replace('\xa0','')
+        self.ship_restocking = third_frame.split('  Ship restocking:\xa0')[1].split('  Active')[0].replace('\xa0', '')
 
         self.affiliations = CrewAffiliations(crew_affiliation_data, self.name)
         self.reputations = Reputations(reputation_data, self.name)
@@ -117,10 +122,16 @@ class Crew(object):
         self.active_mates = ActiveMates(activemate_data, self.name)
         self.members = CrewMembers(member_data, self.name, self._oceanobj)
 
+    def __getattr__(self, item):
+        if not self._data:
+            self._loaddata(self._path)
+        return self.__getattribute__(item)
+
     def __repr__(self):
         name = self.__class__.__name__
         crewid = self.crewid
         return "<{name}:{crewid}>".format(name=name, crewid=crewid)
+
 
 class Flag(object):
     def __init__(self, flagid, initpath, oceanobj):

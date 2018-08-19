@@ -1,6 +1,8 @@
 # Python-YowebAPI
 
 ## Overview
+*This API is not created, supported, or endorsed by [Grey Havens](https://yppedia.puzzlepirates.com/Grey_Havens)*
+
 Unofficial Python bindings for the
 [Yoweb Browser](https://yppedia.puzzlepirates.com/Yoweb).
 My goal is to match all capabilities of the existing browser. A few of
@@ -63,8 +65,12 @@ CREW = OCEAN.getcrew(CREW_ID)
 67
 
 # Example 4: Get a crew's current captain and info
->>> CREW.crew_members.captain
+>>> CREW.members.captain
 [<Pirate:Scar>]
->>> CREW.crew_members.captain[0].name
+>>> CREW.members.captain[0].name
 'Scar'
+
+# Example 5: Update a crew/pirate on the fly
+>>> CREW.update()
+>>> PIRATE.update()
 ```

@@ -67,6 +67,7 @@ class CrewAffiliations(object):
         crewid = self._name
         return "<{name}:{crewid}>".format(name=name, crewid=crewid)
 
+
 class CrewMembers(object):
     def __init__(self, data, name, oceanobj):
         self._name = name
@@ -77,7 +78,7 @@ class CrewMembers(object):
 
         for member_df in member_dfs:
             member_df.dropna(how='all', inplace=True)
-            if str(member_df[0][1]) == 'nan':
+            if member_df.empty:
                 continue
             title = str(member_df[1][member_df.index.values[1]]).lower().replace(' ', '_')
             member_df.drop(member_df.index[:2], inplace=True)
